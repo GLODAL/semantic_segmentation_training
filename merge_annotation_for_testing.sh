@@ -3,7 +3,7 @@
 export WORKDIR=$1
 export PAT_IMG_DIR=$WORKDIR/pat_img/
 export PAT_PRD_DIR=$WORKDIR/pat_prd/
-export OUTPUT=$2
+export OUTPUT="$2"
 
 IFS='
 '
@@ -23,6 +23,6 @@ for PAT_IMG in $(find $PAT_IMG_DIR -type f -regex ".*tif$"); do
     gdal_translate -q -ot Byte -a_srs EPSG:3857 -a_ullr ${upperLeft[0]} ${upperLeft[1]} ${lowerRight[0]} ${lowerRight[1]} "$PAT_PRD" "$PAT_PRD.g.tif"
 done
 
-gdalwarp -co COMPRESS=Deflate $PAT_PRD_DIR/*.g.tif $OUTPUT
+gdalwarp -co COMPRESS=Deflate $PAT_PRD_DIR/*.g.tif "$OUTPUT"
 
 exit 0
