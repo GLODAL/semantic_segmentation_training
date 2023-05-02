@@ -1,6 +1,6 @@
 #! /bin/bash
 
-export INPUT_GTIFF=$1
+export INPUT_GTIFF="$1"
 export WORKDIR=$2
 
 export TEST_PATCH_SIZE=$2
