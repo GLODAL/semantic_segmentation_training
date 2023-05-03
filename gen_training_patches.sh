@@ -38,8 +38,8 @@ function gen_patch() {
         PATCH_XMAX=$(perl -e "print $PATCH_XMIN + $PATCH_SIZE_GX")
         PATCH_YMAX=$(perl -e "print $PATCH_YMIN + $PATCH_SIZE_GY")
 
-        PATCH_IMG="$OUT_PATCH_DIR/patch_img/img/$(basename "$IMG_TIF")-${PATCH_SIZE}-${PATCH_XMIN}_${PATCH_YMIN}-i.tif"
-        PATCH_ANN="$OUT_PATCH_DIR/patch_ann/img/$(basename "$IMG_TIF")-${PATCH_SIZE}-${PATCH_XMIN}_${PATCH_YMIN}-m.tif"
+        PATCH_IMG="$OUT_PATCH_DIR/patch_img/img/$(basename "$IMG_TIF")-${PATCH_SIZE}-${PATCH_XMIN}_${PATCH_YMIN}.tif"
+        PATCH_ANN="$OUT_PATCH_DIR/patch_ann/img/$(basename "$IMG_TIF")-${PATCH_SIZE}-${PATCH_XMIN}_${PATCH_YMIN}.tif"
 
         gdal_translate -q -projwin $PATCH_XMIN $PATCH_YMAX $PATCH_XMAX $PATCH_YMIN "$IMG_TIF" "$PATCH_IMG"
         gdal_translate -q -projwin $PATCH_XMIN $PATCH_YMAX $PATCH_XMAX $PATCH_YMIN "$ANN_TIF" "$PATCH_ANN"
