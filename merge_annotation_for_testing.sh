@@ -8,7 +8,7 @@ export OUTPUT="$3"
 
 IFS='
 '
-EPSG=$(gdalsrsinfo -o epsg "$ORG_IMG_TIF")
+EPSG=$(gdalsrsinfo -o epsg "$ORG_IMG_TIF" | tr -d '\n')
 
 for PAT_IMG in $(find $PAT_IMG_DIR -type f -regex ".*tif$"); do
     IFS=' '
