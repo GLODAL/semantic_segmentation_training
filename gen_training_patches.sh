@@ -7,7 +7,7 @@ export N_PATCH=$4
 export OUT_PATCH_DIR=$5
 
 rm -rf "$OUT_PATCH_DIR"
-mkdir -p "$OUT_PATCH_DIR/patch_img/img" "$OUT_PATCH_DIR/patch_ann/img"
+mkdir -p "$OUT_PATCH_DIR/patch_img/" "$OUT_PATCH_DIR/patch_ann/"
 
 function gen_patch() {
     IMG_TIF=$1
