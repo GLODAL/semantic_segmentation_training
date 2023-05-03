@@ -7,7 +7,7 @@ export N_PATCH=$4
 export OUT_PATCH_DIR=$5
 
 rm -rf "$OUT_PATCH_DIR"
-mkdir -p "$OUT_PATCH_DIR/patch_img" "$OUT_PATCH_DIR/patch_ann"
+mkdir -p "$OUT_PATCH_DIR/patch_img/img" "$OUT_PATCH_DIR/patch_ann/img"
 
 function gen_patch() {
     IMG_TIF=$1
@@ -38,16 +38,16 @@ function gen_patch() {
         PATCH_XMAX=$(perl -e "print $PATCH_XMIN + $PATCH_SIZE_GX")
         PATCH_YMAX=$(perl -e "print $PATCH_YMIN + $PATCH_SIZE_GY")
 
-        PATCH_IMG="$OUT_PATCH_DIR/patch_img/$(basename "$IMG_TIF")-${PATCH_SIZE}-${PATCH_XMIN}_${PATCH_YMIN}-i.tif"
-        PATCH_ANN="$OUT_PATCH_DIR/patch_ann/$(basename "$IMG_TIF")-${PATCH_SIZE}-${PATCH_XMIN}_${PATCH_YMIN}-m.tif"
+        PATCH_IMG="$OUT_PATCH_DIR/patch_img/img/$(basename "$IMG_TIF")-${PATCH_SIZE}-${PATCH_XMIN}_${PATCH_YMIN}-i.tif"
+        PATCH_ANN="$OUT_PATCH_DIR/patch_ann/img/$(basename "$IMG_TIF")-${PATCH_SIZE}-${PATCH_XMIN}_${PATCH_YMIN}-m.tif"
 
         gdal_translate -q -projwin $PATCH_XMIN $PATCH_YMAX $PATCH_XMAX $PATCH_YMIN "$IMG_TIF" "$PATCH_IMG"
         gdal_translate -q -projwin $PATCH_XMIN $PATCH_YMAX $PATCH_XMAX $PATCH_YMIN "$ANN_TIF" "$PATCH_ANN"
         # Training data augumentation.
-        for OPT in -flip -flop "-rotate 90" "-rotate 180" "-rotate 270"; do 
-            convert "$PATCH_IMG" $OPT "$OUT_PATCH_DIR/patch_img/$(basename "$IMG_TIF")-${PATCH_SIZE}-${PATCH_XMIN}_${PATCH_YMIN}$(echo $OPT | sed 's/rotate //g')-i.tif" >& /dev/null
-            convert "$PATCH_ANN" $OPT "$OUT_PATCH_DIR/patch_ann/$(basename "$IMG_TIF")-${PATCH_SIZE}-${PATCH_XMIN}_${PATCH_YMIN}$(echo $OPT | sed 's/rotate //g')-m.tif" >& /dev/null
-        done
+        #for OPT in -flip -flop "-rotate 90" "-rotate 180" "-rotate 270"; do 
+        #    convert "$PATCH_IMG" $OPT "$OUT_PATCH_DIR/patch_img/$(basename "$IMG_TIF")-${PATCH_SIZE}-${PATCH_XMIN}_${PATCH_YMIN}$(echo $OPT | sed 's/rotate //g')-i.tif" >& /dev/null
+        #    convert "$PATCH_ANN" $OPT "$OUT_PATCH_DIR/patch_ann/$(basename "$IMG_TIF")-${PATCH_SIZE}-${PATCH_XMIN}_${PATCH_YMIN}$(echo $OPT | sed 's/rotate //g')-m.tif" >& /dev/null
+        #done
         # Ending autumentation 
 
         j=$(expr $j + 1)
