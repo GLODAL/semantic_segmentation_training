@@ -32,8 +32,7 @@ YMIN=`echo $JSON | jq .cornerCoordinates.lowerLeft[1]`
 XMAX=`echo $JSON | jq .cornerCoordinates.upperRight[0]`
 YMAX=`echo $JSON | jq .cornerCoordinates.upperRight[1]`
 
-rm -f "$OUTPUT"
 mkdir -p $(dirname "$OUTPUT")
-gdalwarp -co COMPRESS=Deflate -te $XMIN $YMIN $XMAX $YMAX $PAT_PRD_DIR/*.g.tif "$OUTPUT"
+gdalwarp -overwrite -co COMPRESS=Deflate -te $XMIN $YMIN $XMAX $YMAX $PAT_PRD_DIR/*.g.tif "$OUTPUT"
 
 exit 0
